@@ -5,6 +5,8 @@ from app.models.recursos_m import recursos_m
 class recursos_mRepository:
 
     def create(self, data: dict) -> recursos_m:
+        valid_fields = set(recursos_m._meta.fields.keys())
+        clean_data = {k: v for k, v in data.items() if k in valid_fields}
         return recursos_m.create(**data)
 
     def get(self, nu_inventario: str) -> Optional[recursos_m]:

@@ -21,7 +21,7 @@ def create_recursos_m(payload: Recursos_mCreate, svc: Recursos_mService = Depend
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.get("/{recursos_m}", response_model=Recursos_mOut)
+@router.get("/{nu_inventario}", response_model=Recursos_mOut)
 def get_personal(recursos_m: str, svc: Recursos_mService = Depends(get_service), _: None = Depends(db_session)):
     data = svc.get(recursos_m)
     if not data:
@@ -40,7 +40,7 @@ def list_recursos_m(
 ):
     return svc.list(q=q, limit=limit, offset=offset, order_by=order_by, desc=desc)
 
-@router.patch("/{recursos_m}", response_model=Recursos_mOut)
+@router.patch("/{nu_inventario}", response_model=Recursos_mOut)
 def update_recursos_m(
     recursos_m: str,
     payload: Recursos_mUpdate,
@@ -52,7 +52,7 @@ def update_recursos_m(
         raise HTTPException(status_code=404, detail="No encontrado o sin cambios")
     return data
 
-@router.delete("/{recursos_m}", status_code=204)
+@router.delete("/{nu_inventario}", status_code=204)
 def delete_recursos_m(
     recursos_m: str,
     svc: Recursos_mService = Depends(get_service),

@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from datetime import date
 from typing import Optional
+from app.schemas.personal import PersonalResponse
 
 # ---------------------------
 # REQUEST / CREATE
@@ -42,10 +43,10 @@ class Recursos_mBase(BaseModel):
         }
 
 class Recursos_mCreate(Recursos_mBase):
-    expediente: int
+    pass
 
 class Recursos_mUpdate(Recursos_mBase):
     pass
 
 class Recursos_mOut(Recursos_mBase):
-    pass
+    expediente_resguardo: Optional[PersonalResponse]

@@ -12,7 +12,7 @@ class recursos_m(Model):
     observaciones = CharField(max_length=200, null=True)
     material = CharField(max_length=150, null=True)
     color = CharField(max_length=100, null=True)
-    estado_ficico = CharField(max_length=100, null=True)
+    estado_fisico = CharField(max_length=100, null=True)
     ubicacion = CharField(max_length=150, null=True)
     expediente_resguardo = ForeignKeyField(
         Personal,
@@ -27,4 +27,4 @@ class recursos_m(Model):
 
     class Meta:
         database = database
-        table_name = "recursos_m"
+        table_name = "recursos_m" 
