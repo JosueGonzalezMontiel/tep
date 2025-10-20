@@ -9,6 +9,10 @@ from app.models.personal import Personal
 from app.models.recursos_m import recursos_m
 from app.db.peewee_conn import database
 import logging
+from app.api.routers.mantenimiento import router as mantenimiento_router
+from app.api.routers.caracteristicas import router as caracteristicas_router
+from app.models.mantenimiento import Mantenimiento
+from app.models.caracteristicas import Caracteristicas
 
 app = FastAPI(title="API RH", version="1.0.0")
 
@@ -27,13 +31,14 @@ logging.getLogger("uvicorn").info(f"CORS_ORIGINS={CORS_ORIGINS}")
 # Registrar routers
 app.include_router(personal_router)
 app.include_router(recursos_m_router)
-
+app.include_router(mantenimiento_router)
+app.include_router(caracteristicas_router)
 # Eventos de app: abrir/cerrar conexión por ciclo de vida
 @app.on_event("startup")
 def on_startup():
     db_session()
     # Crear tablas si no existen (en producción normalmente migraciones)
-    database.create_tables([Personal,recursos_m], safe=True)
+    database.create_tables([Personal,recursos_m, Mantenimiento, Caracteristicas], safe=True)
 
 @app.on_event("shutdown")
 def on_shutdown():
