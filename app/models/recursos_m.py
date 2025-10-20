@@ -27,4 +27,4 @@ class recursos_m(Model):
 
     class Meta:
         database = database
-        table_name = "resursos_m"
+        table_name = "recursos_m"

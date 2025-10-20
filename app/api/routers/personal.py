@@ -4,7 +4,7 @@ from app.schemas.personal import PersonalRequest, PersonalResponse, PersonalUpda
 from app.db.peewee_conn import to_dict
 from app.repositories.personal_repo import (
     create_personal, get_personal, list_personal,
-    update_personal, delete_personal, search_personal
+    update_personal, delete_personal
 )
 from app.api.deps import get_api_key
 
