@@ -22,8 +22,9 @@ def create_recursos_m(payload: Recursos_mCreate, svc: Recursos_mService = Depend
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.get("/{nu_inventario}", response_model=Recursos_mOut)
-def get_personal(recursos_m: str, svc: Recursos_mService = Depends(get_service), _: None = Depends(db_session)):
-    data = svc.get(recursos_m)
+
+def get_personal(nu_inventario: str, svc: Recursos_mService = Depends(get_service), _: None = Depends(db_session)):
+    data = svc.get(nu_inventario)
     if not data:
         raise HTTPException(status_code=404, detail="No encontrado")
     return data
@@ -33,7 +34,7 @@ def list_recursos_m(
     q: Optional[str] = Query(None, description="Búsqueda por descripcion/marca/modelo,serie/expediente_resguardo"),
     limit: int = Query(50, ge=1, le=200),
     offset: int = Query(0, ge=0),
-    order_by: str = Query("recursos_m"),
+    order_by: str = Query("nu_inventario"),
     desc: bool = Query(False),
     svc: Recursos_mService = Depends(get_service),
     _: None = Depends(db_session)
@@ -42,23 +43,23 @@ def list_recursos_m(
 
 @router.patch("/{nu_inventario}", response_model=Recursos_mOut)
 def update_recursos_m(
-    recursos_m: str,
+    nu_inventario: str,
     payload: Recursos_mUpdate,
     svc: Recursos_mService = Depends(get_service),
     _: None = Depends(db_session)
 ):
-    data = svc.update(recursos_m, payload.model_dump(exclude_unset=True))
+    data = svc.update(nu_inventario, payload.model_dump(exclude_unset=True))
     if not data:
         raise HTTPException(status_code=404, detail="No encontrado o sin cambios")
     return data
 
 @router.delete("/{nu_inventario}", status_code=204)
 def delete_recursos_m(
-    recursos_m: str,
+    nu_inventario: str,
     svc: Recursos_mService = Depends(get_service),
     _: None = Depends(db_session)
 ):
-    ok = svc.delete(recursos_m)
+    ok = svc.delete(nu_inventario)
     if not ok:
         raise HTTPException(status_code=404, detail="No encontrado")
     return None
