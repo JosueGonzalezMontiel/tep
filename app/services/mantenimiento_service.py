@@ -10,8 +10,12 @@ class MantenimientoService:
     def create(self, payload: Dict[str, Any]) -> Dict:
         inst = self.repo.create(payload)
         data = model_to_dict(inst, recurse=False)
-        # devolver sólo el id del responsable (no el objeto)
-        data['responsable'] = inst.responsable_id
+        data['id'] = inst.id
+        # Obtener solo el valor de nu_inventario (string)
+        data['nu_inventario'] = inst.nu_inventario.nu_inventario if inst.nu_inventario else None
+        # Convertir el responsable a dict si existe
+        if inst.responsable:
+            data['responsable'] = model_to_dict(inst.responsable, recurse=False)
         return data
 
     def get(self, id: int) -> Optional[Dict]:
@@ -19,7 +23,12 @@ class MantenimientoService:
         if not inst:
             return None
         data = model_to_dict(inst, recurse=False)
-        data['responsable'] = inst.responsable_id
+        data['id'] = inst.id
+        # Obtener solo el valor de nu_inventario (string)
+        data['nu_inventario'] = inst.nu_inventario.nu_inventario if inst.nu_inventario else None
+        # Convertir el responsable a dict si existe
+        if inst.responsable:
+            data['responsable'] = model_to_dict(inst.responsable, recurse=False)
         return data
 
     def list(self, **kwargs) -> Dict:
@@ -33,7 +42,12 @@ class MantenimientoService:
         items = []
         for inst in objs:
             row = model_to_dict(inst, recurse=False)
-            row['responsable'] = inst.responsable_id
+            row['id'] = inst.id
+            # Obtener solo el valor de nu_inventario (string)
+            row['nu_inventario'] = inst.nu_inventario.nu_inventario if inst.nu_inventario else None
+            # Convertir el responsable a dict si existe
+            if inst.responsable:
+                row['responsable'] = model_to_dict(inst.responsable, recurse=False)
             items.append(row)
         return {
             "total": total,

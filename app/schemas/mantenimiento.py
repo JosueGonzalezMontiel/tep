@@ -38,4 +38,8 @@ class MantenimientoUpdate(BaseModel):
     responsable: Optional[int] = None
 
 class MantenimientoOut(MantenimientoBase):
+    id: int = Field(..., description="ID del registro de mantenimiento")
     responsable: Optional[PersonalResponse]
+
+    class Config:
+        from_attributes = True
